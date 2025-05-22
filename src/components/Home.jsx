@@ -8,8 +8,12 @@ import MovieCarousel from "./MovieCarousel";
 
 const Home = (props) => {
   const [change, setChange] = useState(true);
-  const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [response, setResponse] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const carouselChange = () => {
     setChange(!change);
@@ -18,20 +22,33 @@ const Home = (props) => {
     setSearch(s);
   };
 
-  const showSelect = () => {
-    setShow(true);
-  };
-  const movieSelect = () => {
-    setShow(false);
+  const fetchMovies = async (id) => {
+    console.log("fetching...");
+    setIsLoading(true);
+    try {
+      const response = await fetch("http://www.omdbapi.com/?i=tt3896198&apikey=f5beaab6&s=" + id);
+      if (response.ok) {
+        const movieData = await response.json();
+        setResponse(movieData.Response);
+        setMovies(movieData.Search);
+      } else {
+        throw new Error("Errore nel caricamento film");
+      }
+    } catch (error) {
+      console.log(error);
+      setHasError(true);
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
       <Container className="px-2">
-        <MyNav show={show} showSelect={showSelect} movieSelect={movieSelect} />
-        <PageTitle show={show} search={searchSubmit} changeType={carouselChange} />
+        <PageTitle show={props.show} search={searchSubmit} changeType={carouselChange} />
 
-        <MovieCarousel show={show} id={"batman"} change={change} />
+        <MovieCarousel isLoading={isLoading} movies={movies} fetchMovies={fetchMovies} show={props.show} id={search} change={change} />
 
         <MyFooter />
       </Container>

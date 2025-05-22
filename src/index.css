@@ -3,7 +3,36 @@ body {
   color: white;
   font-family: Helvetica, sans-serif;
 }
-
+.text-netflix {
+  color: rgb(243 77 92);
+}
+.info-card {
+  background-color: rgba(149, 148, 148, 0.37);
+  border: solid 2px rgb(170, 170, 170);
+  border-radius: 20px;
+  padding: 25px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.list-group {
+  border: solid 2px #e50a13;
+}
+.list-group-item {
+  background-color: #fb06062b;
+  color: white;
+  border: 0;
+  border-bottom: solid 2px #e50a13;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.selected {
+  color: white !important;
+  font-weight: 500;
+}
+.card:hover {
+  transform: scale(1.08) !important;
+}
+.card {
+  overflow: hidden;
+}
 #root {
   overflow-x: hidden;
   height: 100vh;
